@@ -4,7 +4,6 @@
 </head>
 <body>
     Welcome! <br>
-    Name : ${name} <br>
-    Password : ${password}
+    Name : ${name}
 </body>
 </html>

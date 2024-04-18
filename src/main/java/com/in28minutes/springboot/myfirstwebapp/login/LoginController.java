@@ -12,7 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
+    private AuthenticationService authenticationService;
     private Logger logger = LoggerFactory.getLogger(getClass());
+
+    public LoginController(AuthenticationService authenticationService) {
+        super();
+        this.authenticationService = authenticationService;
+    }
 
     // src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp
     // Model
@@ -26,8 +32,12 @@ public class LoginController {
     public String gotoWelcome(@RequestParam String name,
                               @RequestParam String password,
                               ModelMap model) {
-        model.put("name", name);
-        model.put("password", password);
-        return "welcome";
+        if(authenticationService.authenticate(name, password)) {
+            model.put("name", name);
+
+            return "welcome";
+        }
+        model.put("errorMessage", "Invalid username or password. Please try again.");
+        return "login";
     }
 }
