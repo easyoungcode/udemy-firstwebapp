@@ -7,6 +7,7 @@ import java.time.LocalDate;
 //Database (MySQL)
 //Static List of todos => Database (H2, MySQL)
 public class Todo {
+
     private long id;
     private String username;
     @Size(min = 10, message = "Enter atleast 10 characters")
@@ -69,11 +70,11 @@ public class Todo {
     @Override
     public String toString() {
         return "Todo{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", description='" + description + '\'' +
-                ", targetDate=" + targetDate +
-                ", done=" + done +
-                '}';
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", description='" + description + '\'' +
+            ", targetDate=" + targetDate +
+            ", done=" + done +
+            '}';
     }
 }

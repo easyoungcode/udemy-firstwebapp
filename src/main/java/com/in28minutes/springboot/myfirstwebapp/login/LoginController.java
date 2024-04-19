@@ -32,9 +32,9 @@ public class LoginController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String gotoWelcome(@RequestParam String name,
-                              @RequestParam String password,
-                              ModelMap model) {
-        if(authenticationService.authenticate(name, password)) {
+        @RequestParam String password,
+        ModelMap model) {
+        if (authenticationService.authenticate(name, password)) {
             model.put("name", name);
 
             return "welcome";

@@ -33,7 +33,7 @@ public class TodoController {
     // /add-todos
     @RequestMapping(value = "/add-todo", method = RequestMethod.GET)
     public String showNewTodoPage(ModelMap model) {
-        String username = (String)model.get("name");
+        String username = (String) model.get("name");
         Todo todo = new Todo(0, username, "Default Desc", LocalDate.now().plusYears(1), false);
         model.put("todo", todo);
         return "todo";
@@ -43,19 +43,41 @@ public class TodoController {
     @RequestMapping(value = "/add-todo", method = RequestMethod.POST)
     public String addNewTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
         // 만약 Binding Error가 하나라도 있으면 다시 todo return
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "todo";
         }
-        String username = (String)model.get("name");
+        String username = (String) model.get("name");
         todoService.addTodo(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
         return "redirect:list-todos";
     }
 
-    // /add-todos
+    // /delete-todos
     @RequestMapping(value = "/delete-todo")
-    public String addNewTodo(@RequestParam long id) {
+    public String deleteTodo(@RequestParam long id) {
         // Delete Todo
         todoService.deleteByID(id);
+        return "redirect:list-todos";
+    }
+
+    // /update-todos
+    @RequestMapping(value = "/update-todo")
+    public String showUpdateTodoPage(@RequestParam long id, ModelMap model) {
+        // update Todo
+        Todo todo = todoService.findById(id);
+        model.addAttribute("todo", todo);
+        return "todo";
+    }
+
+    // /update-todos
+    @RequestMapping(value = "/update-todo", method = RequestMethod.POST)
+    public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+        if (result.hasErrors()) {
+            return "todo";
+        }
+
+        String username = (String) model.get("name");
+        todo.setUsername(username);
+        todoService.updateTodo(todo);
         return "redirect:list-todos";
     }
 }
