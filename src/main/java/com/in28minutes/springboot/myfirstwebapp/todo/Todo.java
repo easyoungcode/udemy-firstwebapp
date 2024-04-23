@@ -26,6 +26,9 @@ public class Todo {
     private boolean done;
 
     // 생성자
+    public Todo() {
+    }
+
     public Todo(long id, String username, String description, LocalDate targetDate, boolean done) {
         this.id = id;
         this.username = username;
